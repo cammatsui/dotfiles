@@ -187,8 +187,8 @@ layouts = [
     Plasma(
         border_normal=colors['bg0'],
         border_focus=colors['yellow'],
-        border_normal_fixed='#006863',
-        border_focus_fixed='#00e8dc',
+        border_normal_fixed=colors['yellow'],
+        border_focus_fixed=colors['yellow'],
         border_width=1,
         border_width_single=0,
         margin=8
