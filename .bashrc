@@ -27,6 +27,12 @@ alias mv='mv -i'
 alias bluetoothon="bluetoothctl power on"
 alias connectairpods='bluetoothctl connect E4:76:84:6F:B5:D4'
 alias gitcfg="git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias l='ls'
+alias gs='git status'
+alias ga='git add'
+alias gm='git remove'
+alias gc='git commit'
+
 
 # Set caps lock to escape
 setxkbmap -option "caps:swapescape"
