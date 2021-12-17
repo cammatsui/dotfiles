@@ -161,7 +161,10 @@ keys += [
 
     Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 1- unmute")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute"))
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -c 0 sset Master 1+ unmute")),
+
+    Key([], 'XF86MonBrightnessUp', lazy.spawn("brightnessctl set +10%")),
+    Key([], 'XF86MonBrightnessDown', lazy.spawn("brightnessctl set 10%-"))
 ]
 
 ## WORKSPACES
@@ -226,9 +229,7 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 widget.Volume(),
-                widget.Systray(
-                    background=colors['bg0']
-                ),
+                widget.Systray(),
                 widget.Clock(
                     format=' | %I:%M %p   %m/%d',
                 ),
