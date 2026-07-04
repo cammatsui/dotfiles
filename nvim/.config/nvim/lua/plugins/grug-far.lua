@@ -6,9 +6,9 @@ return {
 
         keymap('n', '<leader>fs', function()
             require('grug-far').open()
-        end)
+        end, 'Search and replace', 'grug-far')
         keymap('n', '<leader>fw', function()
             require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })
-        end)
+        end, 'Search word under cursor', 'grug-far')
     end,
 }

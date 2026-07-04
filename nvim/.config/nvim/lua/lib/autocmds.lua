@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
     callback = function(event)
         local map = function(keys, func, desc)
-            vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+            vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "[lsp] " .. desc })
         end
 
         map("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -86,6 +86,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- diagnostics
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
-vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "[diagnostics] Next Diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "[diagnostics] Prev Diagnostic" })
+vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "[diagnostics] Line Diagnostics" })

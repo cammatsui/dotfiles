@@ -8,7 +8,7 @@ return {
         require('gitlinker').setup(opts)
 
         -- <leader>cl: copy permalink to system clipboard (visual selection or current line)
-        local cl_opts = { noremap = true, silent = true, desc = 'Copy GitHub permalink' }
+        local cl_opts = { noremap = true, silent = true, desc = '[gitlinker] Copy GitHub permalink' }
         local cl_action = '{ action_callback = function(url) vim.fn.setreg("+", url); print("Copied: " .. url) end }'
         vim.api.nvim_set_keymap('v', '<leader>cl', '<cmd>lua require("gitlinker").get_buf_range_url("v", ' .. cl_action .. ')<cr>', cl_opts)
         vim.api.nvim_set_keymap('n', '<leader>cl', '<cmd>lua require("gitlinker").get_buf_range_url("n", { add_current_line_on_normal_mode = true, action_callback = function(url) vim.fn.setreg("+", url); print("Copied: " .. url) end })<cr>', cl_opts)
@@ -70,7 +70,7 @@ return {
             if parsed.line_start and parsed.line_end then
                 vim.cmd('normal! V' .. (parsed.line_end - parsed.line_start) .. 'j')
             end
-        end, { desc = 'Open permalink in split (local file)' })
+        end, { desc = '[gitlinker] Open permalink in split (local file)' })
 
         -- <leader>gp: open exact committed version in a scratch buffer
         vim.keymap.set('n', '<leader>gp', function()
@@ -113,6 +113,6 @@ return {
             if parsed.line_start and parsed.line_end then
                 vim.cmd('normal! V' .. (parsed.line_end - parsed.line_start) .. 'j')
             end
-        end, { desc = 'Open permalink in scratch buffer (exact commit)' })
+        end, { desc = '[gitlinker] Open permalink in scratch buffer (exact commit)' })
     end,
 }

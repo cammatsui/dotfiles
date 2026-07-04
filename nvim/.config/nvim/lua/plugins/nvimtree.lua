@@ -9,6 +9,6 @@ return {
     config = function(_, opts)
         require('nvim-tree').setup(opts)
 
-        keymap('n', '<leader>tt', ':NvimTreeToggle<cr>')
+        keymap('n', '<leader>tt', ':NvimTreeToggle<cr>', 'Toggle file tree', 'nvim-tree')
     end,
 }
