@@ -27,6 +27,7 @@ local options = {
     cursorline = true,
     wrap = false,
     scrolloff = 8,
+    signcolumn = 'yes',
     termguicolors = true,
     showmode = false,
 }

@@ -7,13 +7,13 @@ vim.api.nvim_create_autocmd("VimResized", {
 })
 
 -- prek
-VENV_COMMAND = "PATH=.venv/bin:$PATH prek run --hook-stage manual --files "
-UV_COMMAND = "uv run prek run --files "
-PNPM_BIOME_COMMAND = "pnpm exec biome check --fix --no-errors-on-unmatched "
+local VENV_COMMAND = "PATH=.venv/bin:$PATH prek run --hook-stage manual --files "
+local UV_COMMAND = "uv run prek run --files "
+local PNPM_BIOME_COMMAND = "pnpm exec biome check --fix --no-errors-on-unmatched "
 
-pre_commit_configs = {
+local pre_commit_configs = {
     {
-        repo = "whatnot_backend",
+        repo = "mbe",
         extensions = { "py", "graphql" },
         command = VENV_COMMAND,
     },
@@ -34,22 +34,16 @@ pre_commit_configs = {
     },
 }
 
-function map(tbl, f)
-    local t = {}
-    for k,v in pairs(tbl) do
-        t[k] = f(v)
-    end
-    return t
-end
-
-function run_pre_commit(config)
+local function run_pre_commit(config)
     local command = config.command .. vim.fn.expand('%:p')
-    local job_id = vim.fn.jobstart(command, {
+    vim.fn.jobstart(command, {
         on_exit = function(_, exit_code)
             vim.api.nvim_command('checktime')
         end,
     })
 end
+
+local auto_pre_commit_group = vim.api.nvim_create_augroup("AutoPreCommit", { clear = true })
 
 local function setup_pre_commit(config)
     if vim.fn.getcwd():find(config.repo, 1, true) == nil then
@@ -62,18 +56,16 @@ local function setup_pre_commit(config)
     end
     local pattern_string = table.concat(pattern, ",")
 
-    vim.api.nvim_command("augroup AutoPreCommit")
-    vim.api.nvim_command("autocmd!")
     vim.api.nvim_create_autocmd("BufWritePost", {
+        group = auto_pre_commit_group,
         pattern = pattern_string,
         callback = function()
             run_pre_commit(config)
         end,
     })
-    vim.api.nvim_command("augroup END")
 end
 
-for _, pre_commit_config in ipairs(pre_commit_configs) do 
+for _, pre_commit_config in ipairs(pre_commit_configs) do
     setup_pre_commit(pre_commit_config)
 end
 
@@ -86,9 +78,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
 
         map("K", vim.lsp.buf.hover, "Hover Documentation")
-        map("gd", vim.lsp.buf.declaration, "Goto Declaration")
+        map("gd", vim.lsp.buf.definition, "Goto Definition")
         map("gr", vim.lsp.buf.references, "Goto References")
         map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
         map("<leader>cr", vim.lsp.buf.rename, "Rename all references")
     end,
 })
+
+-- diagnostics
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
+vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })

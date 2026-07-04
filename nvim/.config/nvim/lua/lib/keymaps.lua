@@ -1,15 +1,11 @@
 local opts = { noremap = true, silent = true }
 function keymap(mode, lhs, rhs)
-    local success, error = pcall(vim.api.nvim_set_keymap, mode, lhs, rhs, opts)
-    if not success then
-        vim.keymap.set(mode, lhs, rhs, opts)
-    end
+    vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 -- space as leader
 keymap('', '<Space>', '<Nop>')
 vim.g.mapleader = ' '
-vim.g.localleader = ' '
 vim.g.maplocalleader = '\\'
 
 -- split navigation
